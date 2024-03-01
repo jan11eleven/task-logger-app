@@ -38,6 +38,7 @@ export default function Register() {
       email: '',
       username: '',
       password: '',
+      confirmPassword: '',
       firstName: '',
       middleName: '',
       lastName: '',
@@ -97,6 +98,21 @@ export default function Register() {
                 <div className="flex-1 mr-2">
                   <FormField
                     control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input placeholder="johndoe123" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex-1 mr-2">
+                  <FormField
+                    control={form.control}
                     name="email"
                     render={({ field }) => (
                       <FormItem>
@@ -115,21 +131,6 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                          <Input placeholder="johndoe123" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
                 <div className="flex-1 ml-2">
                   <FormField
                     control={form.control}
@@ -141,6 +142,28 @@ export default function Register() {
                           <Input
                             type="password"
                             placeholder="Password"
+                            {...field}
+                          />
+                        </FormControl>
+                        {/* <FormDescription>
+                          Create a strong password.
+                        </FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex-1 ml-2">
+                  <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="Confirm Password"
                             {...field}
                           />
                         </FormControl>
