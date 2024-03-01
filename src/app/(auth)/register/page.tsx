@@ -71,11 +71,14 @@ export default function Register() {
 
       const data = await rawResponse.json();
 
+      console.log(data);
+
       toast({
         title: 'User Created!',
         description: 'Use your credentials to login to our site',
       });
-      console.log(data);
+
+      form.reset();
     } catch (error) {
       console.error('Error: ', error);
     }
