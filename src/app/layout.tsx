@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: {
     absolute: '',
     default: 'Onse App',
-    template: '%s | Onse',
+    template: '%s',
   },
   description: 'Onse App',
 };

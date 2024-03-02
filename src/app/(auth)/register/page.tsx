@@ -26,6 +26,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { UserAccountSchema } from '@/src/zodSchema/schema';
 import { useToast } from '@/components/ui/use-toast';
+import Loading from './loading';
 
 export default function Register() {
   const { toast } = useToast();
@@ -45,6 +46,10 @@ export default function Register() {
       birthday: '',
     },
   });
+  console.log('is Loading: ', form.formState.isLoading);
+  console.log('is SubmitSuccessful: ', form.formState.isSubmitSuccessful);
+  console.log('is Submitted: ', form.formState.isSubmitted);
+  console.log('is Submitting: ', form.formState.isSubmitting);
 
   async function onSubmit(values: z.infer<typeof UserAccountSchema>) {
     // ✅ This will be type-safe and validated.
@@ -253,7 +258,9 @@ export default function Register() {
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-between"></CardFooter>
+        <CardFooter className="flex justify-between">
+          {form.formState.isSubmitting ? <Loading /> : ''}
+        </CardFooter>
       </Card>
     </div>
   );
