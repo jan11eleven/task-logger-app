@@ -1,6 +1,7 @@
 import prisma from '../db/prisma';
 import AccountType from '../types/AccountType';
 import { AccountSchema } from '../zodSchema/schema';
+import hashPassword from '../lib/hassPassword';
 
 export async function createAccount(
   account: AccountType,
@@ -10,13 +11,16 @@ export async function createAccount(
   const isSuccess = validateAccount(account);
 
   if (isSuccess) {
+    const hashedPassword = await hashPassword(account.password);
+    console.log('account repository:', hashedPassword);
+    console.log(hashedPassword);
     try {
       const newAccount = await tx.account.create({
         data: {
           userId: newUserId,
           email: account.email,
           username: account.username,
-          password: account.password,
+          password: hashedPassword,
           isActive: account.isActive,
           createdAt: account.createdAt,
           role: account.role,

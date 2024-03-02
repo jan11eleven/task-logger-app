@@ -121,7 +121,7 @@ export const AccountSchema = z.object({
     .string()
     .trim()
     .min(8, { message: 'Password must contain at least 8 character(s).' })
-    .max(50),
+    .max(250),
   role: z.string().trim().min(1).max(50),
   updatedAt: z.date().optional(),
 });

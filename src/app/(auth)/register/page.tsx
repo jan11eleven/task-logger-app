@@ -95,7 +95,7 @@ export default function Register() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="username"
@@ -110,7 +110,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 mr-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="email"
@@ -131,7 +131,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex w-full">
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="password"
@@ -142,6 +142,7 @@ export default function Register() {
                           <Input
                             type="password"
                             placeholder="Password"
+                            autoComplete="on"
                             {...field}
                           />
                         </FormControl>
@@ -153,7 +154,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="confirmPassword"
@@ -164,6 +165,7 @@ export default function Register() {
                           <Input
                             type="password"
                             placeholder="Confirm Password"
+                            autoComplete="on"
                             {...field}
                           />
                         </FormControl>
@@ -177,7 +179,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="firstName"
@@ -192,7 +194,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="middleName"
@@ -211,8 +213,8 @@ export default function Register() {
                   />
                 </div>
               </div>
-              <div className="flex w-full">
-                <div className="flex-1 mr-2">
+              <div className="flex w-full ">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="lastName"
@@ -227,7 +229,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="birthday"
@@ -243,7 +245,11 @@ export default function Register() {
                   />
                 </div>
               </div>
-              <Button type="submit">Submit</Button>
+              <div className="flex justify-end">
+                <Button type="submit" className="">
+                  Submit
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
