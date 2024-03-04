@@ -12,8 +12,6 @@ export async function createAccount(
 
   if (isSuccess) {
     const hashedPassword = await hashPassword(account.password);
-    console.log('account repository:', hashedPassword);
-    console.log(hashedPassword);
     try {
       const newAccount = await tx.account.create({
         data: {

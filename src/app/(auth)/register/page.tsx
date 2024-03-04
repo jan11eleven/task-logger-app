@@ -46,10 +46,6 @@ export default function Register() {
       birthday: '',
     },
   });
-  console.log('is Loading: ', form.formState.isLoading);
-  console.log('is SubmitSuccessful: ', form.formState.isSubmitSuccessful);
-  console.log('is Submitted: ', form.formState.isSubmitted);
-  console.log('is Submitting: ', form.formState.isSubmitting);
 
   async function onSubmit(values: z.infer<typeof UserAccountSchema>) {
     // ✅ This will be type-safe and validated.
@@ -92,7 +88,7 @@ export default function Register() {
   return (
     <div className="flex justify-center items-center h-[calc(100vh-60px)]">
       <Card className="w-3/4">
-        <CardHeader>
+        <CardHeader className="ml-2">
           <CardTitle>Register</CardTitle>
           <CardDescription>Fill up the fields below.</CardDescription>
         </CardHeader>
@@ -251,7 +247,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex justify-end">
-                <Button type="submit" className="">
+                <Button type="submit" className="mr-2">
                   Submit
                 </Button>
               </div>

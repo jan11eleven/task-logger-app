@@ -65,7 +65,7 @@ export const UserAccountSchema = z
     (value) => {
       return value.password === value.confirmPassword;
     },
-    { message: 'Password is not matched.', path: ['confirmPassword'] }
+    { message: 'Password do not match.', path: ['confirmPassword'] }
   );
 
 export const UserSchema = z.object({
