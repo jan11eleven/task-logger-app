@@ -2,7 +2,10 @@ import prisma from '../db/prisma';
 import { createAccount } from './account';
 import UserType from '../types/UserType';
 import AccountType from '../types/AccountType';
-import { UserAccountSchema, UserSchema } from '../zodSchema/schema';
+import { UserSchema } from '../zodSchema/schema';
+import ActivateTokenType from '../types/ActivateTokenType';
+import { createActivateToken } from './activateToken';
+import sendActivationEmailToUser from '../utils/sendActivationEmailToUser';
 
 export async function createUser(user: UserType, tx: any): Promise<UserType> {
   const isSuccess = validateUserData(user);
@@ -44,6 +47,7 @@ export async function createUserAccount(user: UserType, account: AccountType) {
       let newUser: UserType;
       let newUserId: number | undefined;
       let newAccount: AccountType;
+      let newToken: ActivateTokenType;
 
       try {
         newUser = await createUser(user, tx);
@@ -60,7 +64,21 @@ export async function createUserAccount(user: UserType, account: AccountType) {
         throw accountError; // Re-throw the error to propagate it to the outer catch block
       }
 
-      return { newUser, newAccount };
+      try {
+        newToken = await createActivateToken(newUserId, tx);
+      } catch (tokenError: any) {
+        errorMessage += tokenError.message;
+        throw tokenError; // Re-throw the error to propagate it to the outer catch block
+      }
+
+      try {
+        await sendActivationEmailToUser(newAccount.email, newToken.token);
+      } catch (sendEmailActivationError: any) {
+        errorMessage += sendEmailActivationError.message;
+        throw sendEmailActivationError; // Re-throw the error to propagate it to the outer catch block
+      }
+
+      return { newUser, newAccount, newToken };
     });
 
     return data;
@@ -69,4 +87,12 @@ export async function createUserAccount(user: UserType, account: AccountType) {
 
     throw new Error(errorMessage);
   }
+}
+
+export async function getOneUser(userId: number) {
+  const userDetails = await prisma.user.findFirstOrThrow({
+    where: { id: userId },
+  });
+
+  return userDetails;
 }

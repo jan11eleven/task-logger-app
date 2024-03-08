@@ -1,0 +1,6 @@
+{
+  "token.token_not_found": "Token not found.",
+  "token.invalid_token": "Invalid Token.",
+  "user.user_not_found": "User not found.",
+  "user.user_is_already_activated": "User is already activated."
+}

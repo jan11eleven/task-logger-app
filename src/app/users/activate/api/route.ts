@@ -1,10 +1,10 @@
-import createUserAction from '@/src/actions/createUserAction';
+import validateUserToken from '@/src/actions/validateUserToken';
 import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
     const parsedData = await request.json();
-    const data = await createUserAction(parsedData);
+    const data = await validateUserToken(parsedData.tokenId);
 
     return new Response(JSON.stringify(data), {
       headers: {
@@ -22,8 +22,6 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: Request) {
-  return Response.json({
-    test: 'data',
-  });
+export async function GET(request: NextRequest) {
+  return new Response('Test');
 }

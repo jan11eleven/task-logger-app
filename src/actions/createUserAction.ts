@@ -32,7 +32,7 @@ export default async function createUserAction(userData: any) {
     email: userData.email,
     username: userData.username,
     password: userData.password,
-    isActive: true,
+    isActive: false,
     createdAt: formattedDateTime,
     role: Role.BASIC,
   };

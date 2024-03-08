@@ -26,6 +26,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { UserAccountSchema } from '@/src/zodSchema/schema';
 import { useToast } from '@/components/ui/use-toast';
+import Loading from './loading';
 
 export default function Register() {
   const { toast } = useToast();
@@ -38,6 +39,7 @@ export default function Register() {
       email: '',
       username: '',
       password: '',
+      confirmPassword: '',
       firstName: '',
       middleName: '',
       lastName: '',
@@ -71,11 +73,15 @@ export default function Register() {
 
       const data = await rawResponse.json();
 
+      console.log(data);
+
       toast({
+        variant: 'success',
         title: 'User Created!',
         description: 'Use your credentials to login to our site',
       });
-      console.log(data);
+
+      form.reset();
     } catch (error) {
       console.error('Error: ', error);
     }
@@ -83,7 +89,7 @@ export default function Register() {
   return (
     <div className="flex justify-center items-center h-[calc(100vh-60px)]">
       <Card className="w-3/4">
-        <CardHeader>
+        <CardHeader className="ml-2">
           <CardTitle>Register</CardTitle>
           <CardDescription>Fill up the fields below.</CardDescription>
         </CardHeader>
@@ -91,7 +97,22 @@ export default function Register() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
+                <div className="flex-1 mx-2">
+                  <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl>
+                          <Input placeholder="johndoe123" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="email"
@@ -112,22 +133,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
-                  <FormField
-                    control={form.control}
-                    name="username"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                          <Input placeholder="johndoe123" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="password"
@@ -138,6 +144,30 @@ export default function Register() {
                           <Input
                             type="password"
                             placeholder="Password"
+                            autoComplete="on"
+                            {...field}
+                          />
+                        </FormControl>
+                        {/* <FormDescription>
+                          Create a strong password.
+                        </FormDescription> */}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <div className="flex-1 mx-2">
+                  <FormField
+                    control={form.control}
+                    name="confirmPassword"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Confirm Password</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="password"
+                            placeholder="Confirm Password"
+                            autoComplete="on"
                             {...field}
                           />
                         </FormControl>
@@ -151,7 +181,7 @@ export default function Register() {
                 </div>
               </div>
               <div className="flex w-full">
-                <div className="flex-1 mr-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="firstName"
@@ -166,7 +196,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="middleName"
@@ -185,8 +215,8 @@ export default function Register() {
                   />
                 </div>
               </div>
-              <div className="flex w-full">
-                <div className="flex-1 mr-2">
+              <div className="flex w-full ">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="lastName"
@@ -201,7 +231,7 @@ export default function Register() {
                     )}
                   />
                 </div>
-                <div className="flex-1 ml-2">
+                <div className="flex-1 mx-2">
                   <FormField
                     control={form.control}
                     name="birthday"
@@ -217,11 +247,17 @@ export default function Register() {
                   />
                 </div>
               </div>
-              <Button type="submit">Submit</Button>
+              <div className="flex justify-end">
+                <Button type="submit" className="mr-2">
+                  Submit
+                </Button>
+              </div>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="flex justify-between"></CardFooter>
+        <CardFooter className="flex justify-between">
+          {form.formState.isSubmitting ? <Loading /> : ''}
+        </CardFooter>
       </Card>
     </div>
   );
