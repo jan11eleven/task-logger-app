@@ -1,3 +1,7 @@
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
+
 export default function accountActivationTemplate(
   email: string,
   token: string
@@ -9,7 +13,11 @@ export default function accountActivationTemplate(
     Message: {
       Body: {
         Text: {
-          Data: 'Here is the token: ' + token,
+          Data:
+            'Click the link to verify your email: ' +
+            publicRuntimeConfig.BASE_URL +
+            '/users/activate/' +
+            token,
         },
       },
       Subject: {

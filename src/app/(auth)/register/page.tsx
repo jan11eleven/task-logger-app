@@ -76,6 +76,7 @@ export default function Register() {
       console.log(data);
 
       toast({
+        variant: 'success',
         title: 'User Created!',
         description: 'Use your credentials to login to our site',
       });

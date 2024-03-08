@@ -88,3 +88,11 @@ export async function createUserAccount(user: UserType, account: AccountType) {
     throw new Error(errorMessage);
   }
 }
+
+export async function getOneUser(userId: number) {
+  const userDetails = await prisma.user.findFirstOrThrow({
+    where: { id: userId },
+  });
+
+  return userDetails;
+}

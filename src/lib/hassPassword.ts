@@ -15,8 +15,8 @@ export default function hashPassword(password: string): Promise<string> {
       }
 
       // At this point, 'hash' contains the hashed password
-      console.log('Salt:', salt);
-      console.log('Hashed Password:', hash);
+      // console.log('Salt:', salt);
+      // console.log('Hashed Password:', hash);
 
       resolve(hash);
       // Now, you can store the 'salt' and 'hash' in your database

@@ -51,3 +51,37 @@ function validateAccount(account: AccountType): boolean {
 
   return data.success;
 }
+
+export async function activateUserAccount(userId: number, tokenId: string) {
+  try {
+    const data = prisma.$transaction(async (tx) => {
+      const updatedAccount = await tx.account.update({
+        where: { userId: userId },
+        data: { isActive: true },
+      });
+
+      const token = await tx.activateToken.update({
+        where: { token: tokenId },
+        data: { activatedAt: new Date() },
+      });
+
+      return { updatedAccount, token };
+    });
+
+    return data;
+  } catch (error: any) {
+    throw new Error('Error in activating account.');
+  }
+}
+
+export async function getOneAccount(userId: number) {
+  try {
+    const accountDetails = prisma.account.findFirst({
+      where: { userId: userId },
+    });
+
+    return accountDetails;
+  } catch (error: any) {
+    throw new Error('Error in getting account details(one): ', error);
+  }
+}

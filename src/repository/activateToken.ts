@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import prisma from '../db/prisma';
 
 export async function createActivateToken(userId: number | undefined, tx: any) {
   try {
@@ -12,6 +13,18 @@ export async function createActivateToken(userId: number | undefined, tx: any) {
 
     return newToken;
   } catch (error) {
-    new Error('Error in creating token');
+    throw new Error('Error in creating token');
+  }
+}
+
+export async function getOneToken(tokenId: string) {
+  try {
+    const foundToken = await prisma.activateToken.findFirst({
+      where: { token: tokenId },
+    });
+
+    return foundToken;
+  } catch (error: any) {
+    throw new Error(error);
   }
 }
